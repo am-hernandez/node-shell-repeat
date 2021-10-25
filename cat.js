@@ -1,13 +1,11 @@
 const fs = require("fs");
 
-module.exports = function (fileName) {
-  // "./bash.js"
+module.exports = function (fileName, done) {
   fs.readFile(fileName, "utf8", (err, data) => {
     if (err) {
-      throw err;
+      done(err);
     } else {
-      process.stdout.write(data);
-      process.stdout.write("\nprompt > ");
+      done(data);
     }
   });
 };

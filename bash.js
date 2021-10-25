@@ -1,9 +1,14 @@
 const ls = require("./ls");
 const pwd = require("./pwd");
 const cat = require("./cat");
-const curl = require("./curl")
+const curl = require("./curl");
 
-process.stdout.write("prompt >");
+const done = (output) => {
+  process.stdout.write(output);
+  process.stdout.write("\nprompt > ");
+};
+
+process.stdout.write("prompt > ");
 
 process.stdin.on("data", (data) => {
   const cmd = data.toString().trim();
@@ -11,12 +16,12 @@ process.stdin.on("data", (data) => {
   const [command, arg] = cmd.split(" ");
   switch (command) {
     case "pwd":
-      return pwd();
+      return pwd(done);
     case "ls":
-      return ls();
+      return ls(done);
     case "cat":
-      return cat(arg);
-      case "curl":
-        return curl(arg);
+      return cat(arg, done);
+    case "curl":
+      return curl(arg, done);
   }
 });
